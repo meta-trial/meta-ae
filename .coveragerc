@@ -1,0 +1,4 @@
+[run]
+include = meta_ae/*
+omit = meta_ae/tests/*,meta_ae/migrations/*
+branch = 1
