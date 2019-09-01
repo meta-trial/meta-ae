@@ -48,23 +48,8 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
                 )
             },
         ),
-        (
-            "Part 2: Relationship to study drug",
-            {
-                "fields": (
-                )
-            },
-        ),
-        (
-            "Part 3:",
-            {
-                "fields": (
-                    "ae_cause",
-                    "ae_cause_other",
-                    "ae_treatment",
-                )
-            },
-        ),
+        ("Part 2: Relationship to study drug", {"fields": ()}),
+        ("Part 3:", {"fields": ("ae_cause", "ae_cause_other", "ae_treatment")}),
         ("Part 4:", {"fields": ("sae", "sae_reason")}),
         action_fieldset_tuple,
         audit_fieldset_tuple,
@@ -97,8 +82,7 @@ class AeInitialAdmin(ModelAdminSubjectDashboardMixin, SimpleHistoryAdmin):
         "sae_reason",
     ]
 
-    search_fields = ["subject_identifier",
-                     "action_identifier", "tracking_identifier"]
+    search_fields = ["subject_identifier", "action_identifier", "tracking_identifier"]
 
     def user(self, obj):
         """Returns formatted user names and creation/modification dates.

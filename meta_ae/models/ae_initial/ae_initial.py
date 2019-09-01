@@ -32,8 +32,7 @@ class AeInitial(
 
     action_name = AE_INITIAL_ACTION
 
-    ae_classification_old = models.CharField(
-        max_length=150, default=QUESTION_RETIRED)
+    ae_classification_old = models.CharField(max_length=150, default=QUESTION_RETIRED)
 
     ae_study_relation_possibility = models.CharField(
         verbose_name=(
@@ -88,7 +87,6 @@ class AeInitial(
         verbose_name = "AE Initial Report"
         indexes = [
             models.Index(
-                fields=["subject_identifier",
-                        "action_identifier", "site", "id"]
+                fields=["subject_identifier", "action_identifier", "site", "id"]
             )
         ]

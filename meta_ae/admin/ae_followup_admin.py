@@ -78,8 +78,7 @@ class AeFollowupAdmin(
         link = None
         if obj.followup == YES:
             try:
-                ae_followup = self.model.objects.get(
-                    parent_action_item=obj.action_item)
+                ae_followup = self.model.objects.get(parent_action_item=obj.action_item)
             except ObjectDoesNotExist:
                 ae_followup = None
             link = self.ae_followup(ae_followup)

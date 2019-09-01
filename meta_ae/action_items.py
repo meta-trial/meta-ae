@@ -4,13 +4,9 @@ from edc_action_item import ActionWithNotification, site_action_items
 from edc_adverse_event.constants import (
     AE_INITIAL_ACTION,
     AE_FOLLOWUP_ACTION,
-    DEATH_REPORT_ACTION)
-from edc_constants.constants import (
-    DEAD,
-    LOST_TO_FOLLOWUP,
-    YES,
-    HIGH_PRIORITY,
+    DEATH_REPORT_ACTION,
 )
+from edc_constants.constants import DEAD, LOST_TO_FOLLOWUP, YES, HIGH_PRIORITY
 from edc_reportable import GRADE5
 from edc_visit_schedule.utils import get_offschedule_models
 from meta_subject.constants import BLOOD_RESULTS_ACTION
@@ -60,8 +56,7 @@ class AeFollowupAction(ActionWithNotification):
                 subject_identifier=self.subject_identifier,
                 report_datetime=self.reference_obj.report_datetime,
             ):
-                action_cls = site_action_items.get_by_model(
-                    model=offschedule_model)
+                action_cls = site_action_items.get_by_model(model=offschedule_model)
                 next_actions = self.append_to_next_if_required(
                     next_actions=next_actions,
                     action_name=action_cls.name,
