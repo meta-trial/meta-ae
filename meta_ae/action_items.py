@@ -9,7 +9,12 @@ from edc_adverse_event.constants import (
 from edc_constants.constants import DEAD, LOST_TO_FOLLOWUP, YES, HIGH_PRIORITY
 from edc_reportable import GRADE5
 from edc_visit_schedule.utils import get_offschedule_models
-from meta_subject.constants import BLOOD_RESULTS_ACTION
+from meta_subject.constants import (
+    BLOOD_RESULTS_GLU_ACTION,
+    BLOOD_RESULTS_LFT_ACTION,
+    BLOOD_RESULTS_RFT_ACTION,
+    BLOOD_RESULTS_FBC_ACTION,
+)
 
 
 class AeFollowupAction(ActionWithNotification):
@@ -69,7 +74,12 @@ class AeInitialAction(ActionWithNotification):
     name = AE_INITIAL_ACTION
     display_name = "Submit AE Initial Report"
     notification_display_name = "AE Initial Report"
-    parent_action_names = [BLOOD_RESULTS_ACTION]
+    parent_action_names = [
+        BLOOD_RESULTS_GLU_ACTION,
+        BLOOD_RESULTS_LFT_ACTION,
+        BLOOD_RESULTS_RFT_ACTION,
+        BLOOD_RESULTS_FBC_ACTION,
+    ]
     reference_model = "meta_ae.aeinitial"
     show_link_to_changelist = True
     show_link_to_add = True
