@@ -10,7 +10,8 @@ register = template.Library()
 
 
 format_ae_description_template_name = (
-    f"ambition_ae/bootstrap{settings.EDC_BOOTSTRAP}/ae_initial_description.html"
+    f"{settings.ADVERSE_EVENT_APP_LABEL}/bootstrap{settings.EDC_BOOTSTRAP}/"
+    f"ae_initial_description.html"
 )
 
 
