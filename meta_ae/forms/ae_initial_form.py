@@ -1,12 +1,10 @@
-from edc_adverse_event.forms import AeInitialForm as BaseAeInitialForm
+from django import forms
+from edc_adverse_event.modelform_mixins import AeInitialModelFormMixin
 
-from ..models import AeInitial, AeFollowup
+from ..models import AeInitial
 
 
-class AeInitialForm(BaseAeInitialForm):
-
-    ae_followup_model_cls = AeFollowup
-
+class AeInitialForm(AeInitialModelFormMixin, forms.ModelForm):
     class Meta:
         model = AeInitial
         fields = "__all__"
