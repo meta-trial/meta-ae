@@ -16,7 +16,9 @@ class MetaDeathReportModelMixin(models.Model):
     )
 
     death_location_name = models.CharField(
-        verbose_name="If death occurred at hospital / clinic, please give name of the facility",
+        verbose_name=(
+            "If death occurred at hospital / clinic, please give name of the facility"
+        ),
         max_length=150,
         null=True,
         blank=True,

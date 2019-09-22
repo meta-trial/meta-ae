@@ -52,7 +52,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "edc_auth.apps.AppConfig",
         "edc_consent.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
-        "edc_data_manager.apps.AppConfig",
+        # "edc_data_manager.apps.AppConfig",
         "edc_device.apps.AppConfig",
         "edc_identifier.apps.AppConfig",
         "edc_lab.apps.AppConfig",

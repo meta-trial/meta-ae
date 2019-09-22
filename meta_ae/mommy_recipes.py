@@ -36,5 +36,8 @@ aefollowup = Recipe(
 )
 
 deathreport = Recipe(
-    DeathReport, subject_identifier=None, action_identifier=None, tracking_identifier=None,
+    DeathReport,
+    subject_identifier=None,
+    action_identifier=None,
+    tracking_identifier=None,
 )

@@ -24,7 +24,8 @@ from meta_screening.tests.options import (
 from meta_sites.sites import fqdn, meta_sites
 from model_mommy import mommy
 from edc_adverse_event.constants import (
-    AE_FOLLOWUP_ACTION, AE_TMG_ACTION,
+    AE_FOLLOWUP_ACTION,
+    AE_TMG_ACTION,
     DEATH_REPORT_ACTION,
     DEATH_REPORT_TMG_ACTION,
 )
@@ -56,14 +57,13 @@ class MetaTestCaseMixin(SiteTestCaseMixin):
 
     def get_subject_screening(self):
         part_one = ScreeningPartOne.objects.create(
-            user_created="erikvw",
-            user_modified="erikvw",
-            **part_one_eligible_options)
+            user_created="erikvw", user_modified="erikvw", **part_one_eligible_options
+        )
         screening_identifier = part_one.screening_identifier
         self.assertEqual(part_one.eligible_part_one, YES)
 
         screening_part_two = ScreeningPartTwo.objects.get(
-            screening_identifier=screening_identifier,
+            screening_identifier=screening_identifier
         )
         for k, v in part_two_eligible_options.items():
             setattr(screening_part_two, k, v)
@@ -72,7 +72,7 @@ class MetaTestCaseMixin(SiteTestCaseMixin):
         self.assertEqual(screening_part_two.eligible_part_two, YES)
 
         screening_part_three = ScreeningPartThree.objects.get(
-            screening_identifier=screening_identifier,
+            screening_identifier=screening_identifier
         )
         for k, v in part_three_eligible_options.items():
             setattr(screening_part_three, k, v)
@@ -80,22 +80,24 @@ class MetaTestCaseMixin(SiteTestCaseMixin):
         self.assertEqual(screening_part_three.eligible_part_three, YES)
 
         subject_screening = SubjectScreening.objects.get(
-            screening_identifier=screening_identifier)
+            screening_identifier=screening_identifier
+        )
         self.assertTrue(subject_screening.eligible)
         return subject_screening
 
     def get_subject_consent(self, subject_screening):
         return mommy.make_recipe(
-            'meta_consent.subjectconsent',
+            "meta_consent.subjectconsent",
             user_created="erikvw",
             user_modified="erikvw",
             screening_identifier=subject_screening.screening_identifier,
             initials=subject_screening.initials,
-            dob=get_utcnow().date() - relativedelta(years=subject_screening.age_in_years))
+            dob=get_utcnow().date()
+            - relativedelta(years=subject_screening.age_in_years),
+        )
 
 
 class TestActions(MetaTestCaseMixin, TestCase):
-
     @classmethod
     def setUpClass(cls):
         import_holidays()
@@ -106,33 +108,37 @@ class TestActions(MetaTestCaseMixin, TestCase):
         subject_screening = self.get_subject_screening()
         subject_consent = self.get_subject_consent(subject_screening)
         ae_initial = mommy.make_recipe(
-            "meta_ae.aeinitial",
-            subject_identifier=subject_consent.subject_identifier)
+            "meta_ae.aeinitial", subject_identifier=subject_consent.subject_identifier
+        )
 
         try:
             action_item = ActionItem.objects.get(
-                action_identifier=ae_initial.action_identifier)
+                action_identifier=ae_initial.action_identifier
+            )
         except ObjectDoesNotExist:
             self.fail("ObjectDoesNotExist unexpectedly raised.")
         else:
             self.assertEqual(action_item.status, CLOSED)
-            self.assertEqual(action_item.subject_identifier,
-                             subject_consent.subject_identifier)
+            self.assertEqual(
+                action_item.subject_identifier, subject_consent.subject_identifier
+            )
 
     def test_ae_initial_creates_ae_followup_action(self):
         subject_screening = self.get_subject_screening()
         subject_consent = self.get_subject_consent(subject_screening)
         ae_initial = mommy.make_recipe(
-            "meta_ae.aeinitial",
-            subject_identifier=subject_consent.subject_identifier)
+            "meta_ae.aeinitial", subject_identifier=subject_consent.subject_identifier
+        )
 
         action_item = ActionItem.objects.get(
-            action_identifier=ae_initial.action_identifier)
+            action_identifier=ae_initial.action_identifier
+        )
         try:
             action_item = ActionItem.objects.get(
                 parent_action_item=action_item,
                 action_type__name=AE_FOLLOWUP_ACTION,
-                subject_identifier=subject_consent.subject_identifier)
+                subject_identifier=subject_consent.subject_identifier,
+            )
         except ObjectDoesNotExist:
             self.fail("ObjectDoesNotExist unexpectedly raised.")
         else:
@@ -144,12 +150,14 @@ class TestActions(MetaTestCaseMixin, TestCase):
         mommy.make_recipe(
             "meta_ae.aeinitial",
             subject_identifier=subject_consent.subject_identifier,
-            ae_grade=GRADE4)
+            ae_grade=GRADE4,
+        )
 
         try:
             ActionItem.objects.get(
                 action_type__name=AE_TMG_ACTION,
-                subject_identifier=subject_consent.subject_identifier)
+                subject_identifier=subject_consent.subject_identifier,
+            )
         except ObjectDoesNotExist:
             self.fail("ObjectDoesNotExist unexpectedly raised.")
 
@@ -159,7 +167,8 @@ class TestActions(MetaTestCaseMixin, TestCase):
         mommy.make_recipe(
             "meta_ae.aeinitial",
             subject_identifier=subject_consent.subject_identifier,
-            ae_grade=GRADE5)
+            ae_grade=GRADE5,
+        )
         try:
             ActionItem.objects.get(
                 action_type__name=DEATH_REPORT_ACTION,
@@ -181,7 +190,8 @@ class TestActions(MetaTestCaseMixin, TestCase):
         mommy.make_recipe(
             "meta_ae.aeinitial",
             subject_identifier=subject_consent.subject_identifier,
-            ae_grade=GRADE5)
+            ae_grade=GRADE5,
+        )
         action_item = ActionItem.objects.get(
             action_type__name=DEATH_REPORT_ACTION,
             subject_identifier=subject_consent.subject_identifier,
@@ -190,7 +200,8 @@ class TestActions(MetaTestCaseMixin, TestCase):
         mommy.make_recipe(
             "meta_ae.deathreport",
             subject_identifier=subject_consent.subject_identifier,
-            action_identifier=action_item.action_identifier)
+            action_identifier=action_item.action_identifier,
+        )
 
         action_item.refresh_from_db()
         self.assertEqual(action_item.status, CLOSED)

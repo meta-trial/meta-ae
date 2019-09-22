@@ -6,3 +6,7 @@ django-rest-framework
 edc_test_utils
 meta_dashboard
 meta_reports
+meta_labs
+meta_sites
+meta_visit_schedule
+meta_form_validators
