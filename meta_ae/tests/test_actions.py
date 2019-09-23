@@ -2,8 +2,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase, tag
 from edc_action_item.models import ActionItem
 from edc_constants.constants import CLOSED, NEW
-from edc_facility.import_holidays import import_holidays
-from edc_randomization.management.commands import import_randomization_list
 from model_mommy import mommy
 from edc_adverse_event.constants import (
     AE_FOLLOWUP_ACTION,
@@ -16,11 +14,6 @@ from meta_screening.tests.meta_test_case_mixin import MetaTestCaseMixin
 
 
 class TestActions(MetaTestCaseMixin, TestCase):
-    @classmethod
-    def setUpClass(cls):
-        import_holidays()
-        import_randomization_list
-        return super(TestActions, cls).setUpClass()
 
     def test_ae_initial_creates_action(self):
         subject_screening = self.get_subject_screening()
