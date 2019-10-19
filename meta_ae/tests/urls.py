@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls.conf import path, include
 
 urlpatterns = [
-    path("ambition_ae/", include("meta_ae.urls")),
+    path("ae/", include("meta_ae.urls")),
     path("admin/", meta_ae_admin.urls),
     path("admin/", admin.site.urls),
 ]
