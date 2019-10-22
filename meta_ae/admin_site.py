@@ -4,6 +4,9 @@ from django.contrib.sites.shortcuts import get_current_site
 
 class AdminSite(DjangoAdminSite):
 
+    site_title = "META: Adverse Events"
+    site_header = "META: Adverse Events"
+    index_title = "META: Adverse Events"
     site_url = "/administration/"
 
     def each_context(self, request):
